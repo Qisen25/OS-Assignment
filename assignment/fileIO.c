@@ -29,11 +29,7 @@ void readFile(char *fileName, LinkedList *list)
     { 
         while (fgets(str, MAX_CHARS, file) != NULL)
         {
-            sscanf(str, "%3d:%2d", &(show->time.hours), &(show->time.mins));/*get task id and cpu burst*/
-
-            fgets(str, MAX_CHARS, file);/*read line after to get arrival time */
-            sscanf(str, "%2d:%2d:%2d", &(show->time.hours), &(show->time.mins),  &(show->time.secs));/*store hours mins and secs*/
-
+            sscanf(str, "%3d %2d", &(task_id), &(cpu_burst));/*get task id and cpu burst*/
          
             enqueue(list, show);/*insert last into queue for ascending order*/        
        
