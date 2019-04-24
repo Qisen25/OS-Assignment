@@ -1,4 +1,6 @@
 
+#pragma once
+
 typedef struct node
 {
     void* data;

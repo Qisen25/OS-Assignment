@@ -16,33 +16,38 @@
  * IMPORTS: string fileName, and a pointer to LinkedList.
  * PURPOSE: reads
  */
-void readFile(char *fileName, LinkedList *list)
+int readFile(char *fileName, Queue *q)
 {
     FILE *file = fopen(fileName, "r");
     char str[MAX_CHARS];
+    process* task = NULL;
     
-    if (file == NULL && validFormat != TRUE)/*if file does not exist, it is also not valid*/
+    if (file == NULL)
     {
-        perror("Error reading file");
+        printf("\n");
+        perror("Error writing to file");
+        return -1;
     }
     else
-    { 
+    {
         while (fgets(str, MAX_CHARS, file) != NULL)
         {
-            sscanf(str, "%3d %2d", &(task_id), &(cpu_burst));/*get task id and cpu burst*/
-         
-            enqueue(list, show);/*insert last into queue for ascending order*/        
-       
+            task = (process*)malloc(sizeof(process));
+            sscanf(str, "%3d %2d", &(task->task_id), &(task->cpu_burst));/*get task id and cpu burst*/
+             
+            enqueue(q, task);/*insert last into queue for ascending order*/        
+           
         }
 
         if (ferror(file))/*check if any error when read*/
         {
-            printf("Error reading file\n");
+                printf("Error reading file\n");
         }
 
         fclose(file);
     }
 
+    return 0;
 }
 
 /*
@@ -61,19 +66,14 @@ void writeToFile(char *fileName)
         printf("\n");
         perror("Error writing to file");
     }
-    else if (length < 1)/*at least 1 show should be in guide in order to write to file*/
-    {
-        printf("nothing to write to file: %s\n", fileName);
-        fclose(file);
-    }
     else
     {
-        for (i = 0; i < length; i++)
+        for (i = 0; i < 10; i++)
         {
             /*hours and minutes should only have 2 digits,
               if it is single digit then just add zero
               at the front*/ 
-            fprintf(file, "%02d:%02d - %s", guide[i]->time.hours, guide[i]->time.mins, guide[i]->name);
+            fprintf(file, "sssssssssssss");
         }
 
         if (ferror(file))
@@ -91,4 +91,4 @@ void writeToFile(char *fileName)
 }
 
 
-}
+
