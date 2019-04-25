@@ -16,5 +16,7 @@ typedef struct
 void* task(void* arg);
 void* cpu(void *arg);
 void getTime(int *hr, int *min, int *sec);
-
+void calcWaitTime(process *inTask, int hr, int min, int sec);
+void calcTurnAround(process *inTask, int hr, int min, int sec);
+void taskTimeStats();
 
