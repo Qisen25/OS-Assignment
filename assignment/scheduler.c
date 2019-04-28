@@ -172,9 +172,9 @@ void* cpu(void *arg)
 	// {
 	// 	sleep(1);
 	// }
-	//**check critical_empty to see the mutex lock**
+	//**check critical_notEmpty to see the mutex lock**
 	//Run if either ready is not empty or file queue still contains tasks.
-	while(critical_empty())
+	while(critical_notEmpty())
 	{
 		// unlock if condition above is true
 		//pthread_mutex_lock(&mutex);
@@ -313,7 +313,7 @@ void taskTimeStats()
 	printf("Average turn around time: %.2f seconds\n", avg_TAT);
 }
 
-int critical_empty()
+int critical_notEmpty()
 {
 	int isEmpty = 0;
 

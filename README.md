@@ -5,8 +5,8 @@ C Program scheduler simulating operations of three Processor Scheduling Simulati
 Based on Bounded buffer, producer and consumer problem. Pthread libraries are used.
 
 *Execute following to run*
-    1. make to compile
-    2. ./scheduler file_name m
-       m - size of ready queue between 1 to 10
+    1. make to compile<br>
+    2. ./scheduler file_name m<br>
+       m - size of ready queue between 1 to 10<br>
 
 
