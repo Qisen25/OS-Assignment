@@ -11,7 +11,7 @@
 
 float num_tasks = 0.0, total_waiting_time = 0.0, total_turnaround_time = 0.0; 
 
-int bufferSize, fileSize, task_running = 0;
+int bufferSize, fileSize, taskThread_ran = 0;
 
 pthread_cond_t full, empty, can_use;//conditions for wait and signaling
 pthread_mutex_t mutex, queue_mutex;
@@ -101,7 +101,7 @@ void* task(void *arg)
 
 	    task1 = dequeue(fromFile);
 	    printf("task inputting\n");
-	    task_running = 1;
+	    taskThread_ran = 1;
 	   
 
 	    while(readyQueue->length == bufferSize)
@@ -139,7 +139,7 @@ void* task(void *arg)
 
 	//pthread_mutex_unlock(&mutex);
 	//pthread_cond_broadcast(&full);
-	task_running = 2;
+	taskThread_ran = 2;
 	printf("\nNumber of tasks put into Ready-Queue: %d\n", fileSize);
 	getTime(&now_hr, &now_min, &now_sec);
 	printf("Terminate at time: %d:%d:%d\n",  now_hr, now_min, now_sec);
@@ -164,11 +164,14 @@ void* cpu(void *arg)
    /*sleep if file has less than 3 tasks
     *having less than 3 tasks cause sync issues
 	*threads don't start in order, it is random.
+	*this causes cpu threads to enter before task thread and wait
+	*then task thread finishes but cannot signal one or more cpu
+	*on the wait condition. This doesn't happen when there are 3 or more tasks
 	*/
-    if(fileSize < 3)
-	{
-		sleep(1);
-	}
+ //    if(fileSize < 3)
+	// {
+	// 	sleep(1);
+	// }
 	//**check critical_empty to see the mutex lock**
 	//Run if either ready is not empty or file queue still contains tasks.
 	while(critical_empty())
@@ -315,6 +318,11 @@ int critical_empty()
 	int isEmpty = 0;
 
 	pthread_mutex_lock(&mutex);	
+
+	while(taskThread_ran == 0)
+	{
+		pthread_cond_wait(&can_use, &mutex);
+	}
 
 	isEmpty = (!queueEmpty(readyQueue) || !queueEmpty(fromFile));
 
