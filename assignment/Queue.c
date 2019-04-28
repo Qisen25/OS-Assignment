@@ -1,7 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <pthread.h>
 #include "Queue.h"
 
+/*
+ * Queue implementation
+ *AUTHOR: Kei Sum Wang    student id: 19126089
+ *REFERENCE: this is based off linked list from the unit Unix and C programming
+ */
+
+/*
+ *Initialisation of queue
+ *EXPORT: an initialised queue ready to use
+ */
 Queue* createQueue()
 {
     Queue* q;
@@ -14,6 +25,11 @@ Queue* createQueue()
     return q;
 }
 
+/*
+ * enqueue 
+ *PURPOSE: inserts data into queue. each data inserted at end of queue
+ *IMPORT: queue and a data of type void pointer
+ */
 void enqueue(Queue* q, void* data)
 {
     Qnode* newNode;
@@ -36,6 +52,13 @@ void enqueue(Queue* q, void* data)
 
     q->length++;
 }
+
+/*
+ * dequeue 
+ *PURPOSE: remove data from queue. each data remove from front of queue
+ *IMPORT: queue
+ *EXPORTS: void pointer
+ */
 
 void* dequeue(Queue* q)
 {
@@ -66,6 +89,11 @@ void* dequeue(Queue* q)
     return value;
 }
 
+/*
+ *Check if queue is empty
+ *IMPORT: queue
+ *EXPORT: integer indicating empty or nor
+ */
 int queueEmpty(Queue* q)
 {
     int isEmpty = 0;
@@ -78,6 +106,11 @@ int queueEmpty(Queue* q)
     return isEmpty;
 }
 
+/*
+ * peek at front of queue
+ *IMPORT: queue
+ *EXPORT: data of type void pointer
+ */
 void* peekFirst(Queue *q)
 {
     void* value;
@@ -94,6 +127,11 @@ void* peekFirst(Queue *q)
     return value;
 }
 
+/*
+ * peek at end of queue
+ *IMPORT: queue
+ *EXPORT: data of type void pointer
+ */
 void* peekLast(Queue *q)
 {
     void* value;
@@ -110,7 +148,10 @@ void* peekLast(Queue *q)
     return value;
 }
 
-
+/*
+ * free queue and its content from memory if needed
+ *IMPORT: queue, integer indicating to free data or not
+ */
 void freeQueue(Queue* q, int freeOrNot)
 {
     Qnode* node, *nextNode;

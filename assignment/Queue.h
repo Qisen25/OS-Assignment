@@ -22,3 +22,5 @@ int queueEmpty(Queue* q);
 void* peekFirst(Queue *q);
 void* peekLast(Queue *q);
 void freeQueue(Queue* q, int freeOrNot);
+
+

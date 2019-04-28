@@ -8,15 +8,13 @@
 #include <pthread.h>
 #include <unistd.h>
 #include "scheduler.h"
-#include "fileIO.h"
-#include "Queue.h"
 
 float num_tasks = 0.0, total_waiting_time = 0.0, total_turnaround_time = 0.0; 
 
-int bufferSize, fileSize;
+int bufferSize, fileSize, task_running = 0;
 
-pthread_cond_t full, empty;//conditions for wait and signaling
-pthread_mutex_t mutex;
+pthread_cond_t full, empty, can_use;//conditions for wait and signaling
+pthread_mutex_t mutex, queue_mutex;
 
 //shared buffers
 Queue* readyQueue;
@@ -51,8 +49,10 @@ int main(int argc, char *argv[])
     fileSize = fromFile->length;
 
     pthread_mutex_init(&mutex, NULL);
+    pthread_mutex_init(&queue_mutex, NULL);
     pthread_cond_init(&full, NULL);
     pthread_cond_init(&empty, NULL);
+    pthread_cond_init(&can_use, NULL);
 
     //task thread
     pthread_create(&task_thread, NULL, &task, NULL);
@@ -70,6 +70,9 @@ int main(int argc, char *argv[])
     pthread_mutex_destroy(&mutex);
     pthread_cond_destroy(&full);
     pthread_cond_destroy(&empty);
+
+    printf("%d flength begin\n", fromFile->length);
+    printf("%d rlength begin\n", readyQueue->length);
 
     freeQueue(fromFile, 0);
     freeQueue(readyQueue, 0);
@@ -91,9 +94,15 @@ void* task(void *arg)
 
 	while(!queueEmpty(fromFile))
 	{
-		task1 = dequeue(fromFile);
+		
 
 	    pthread_mutex_lock(&mutex);//lock thread to prevent to incorrect processing
+
+
+	    task1 = dequeue(fromFile);
+	    printf("task inputting\n");
+	    task_running = 1;
+	   
 
 	    while(readyQueue->length == bufferSize)
 		{
@@ -103,50 +112,34 @@ void* task(void *arg)
 
 		//critical section for queueing
 	    	//TODO this is currently pseudocode, do real implement soon
-		//if(readyQueue->length == bufferSize - 1)
-	    //{
 	    	//printf("***Queueing task*****\n");
-	    	getTime(&(task1->arrive_hr), &(task1->arrive_min), &(task1->arrive_sec));//get current time
-	        enqueue(readyQueue, task1);
- 
-			printf("\n#: %d | Burst: %d\n", task1->task_id, task1->cpu_burst);
-    		printf("Arrival time: %d:%d:%d\n", task1->arrive_hr, task1->arrive_min, task1->arrive_sec);
+    	getTime(&(task1->arrive_hr), &(task1->arrive_min), &(task1->arrive_sec));//get current time
+        enqueue(readyQueue, task1);
 
-	
-	    
-	    //}
-/*	    else if(readyQueue->length < bufferSize)
-	    {
-	    	printf("f2nd if");
+		printf("\n#: %d | Burst: %d\n", task1->task_id, task1->cpu_burst);
+		printf("Arrival time: %d:%d:%d\n", task1->arrive_hr, task1->arrive_min, task1->arrive_sec);
 
-	    	//get data from file queue
-	    	task1 = dequeue(fromFile);
-	    	task2 = dequeue(fromFile);
-
-	    	//add to ready queue
-	        enqueue(readyQueue, task1);
-	        printf("#: %d | Burst: %d\n", task1->task_id, task1->cpu_burst);
-	        printf("Arrival time: %d:%d:%d\n", hr, min, sec);
-
+		printf("7 mod 2 %d\n", bufferSize % 2);
+		if(readyQueue->length > 1 && fromFile->length > 1)
+		{
+			task2 = dequeue(fromFile);
+			getTime(&(task2->arrive_hr), &(task2->arrive_min), &(task2->arrive_sec));//get current time
 	        enqueue(readyQueue, task2);
-	        printf("#: %d | Burst: %d\n", task2->task_id, task2->cpu_burst);
-	        printf("Arrival time: %d:%d:%d\n", hr, min, sec);
-	    }*/
 
+			printf("\n#: %d | Burst: %d\n", task2->task_id, task2->cpu_burst);
+			printf("Arrival time: %d:%d:%d\n", task2->arrive_hr, task2->arrive_min, task2->arrive_sec);
+		}
 
-
+		pthread_cond_broadcast(&can_use);
+		pthread_cond_signal(&full);//signal that processes are available in readyqueue
 	    pthread_mutex_unlock(&mutex);//unlock mutex after done enqueueing
-	    //todo create if cond here
 
-	    //if(readyQueue->length == bufferSize)
-	    //{
-	    	pthread_cond_signal(&full);//signal that processes are available in readyqueue
-   		//}
-	        
 
 	}
 
+	//pthread_mutex_unlock(&mutex);
 	//pthread_cond_broadcast(&full);
+	task_running = 2;
 	printf("\nNumber of tasks put into Ready-Queue: %d\n", fileSize);
 	getTime(&now_hr, &now_min, &now_sec);
 	printf("Terminate at time: %d:%d:%d\n",  now_hr, now_min, now_sec);
@@ -168,69 +161,79 @@ void* cpu(void *arg)
 
 	task_counter = 0;
 
-	//while(readyQueue->length > 0 || fromFile->length > 0)
-	//run if either ready is not empty or file queue still contains tasks
-	while(!queueEmpty(readyQueue) || !queueEmpty(fromFile))
+   /*sleep if file has less than 3 tasks
+    *having less than 3 tasks cause sync issues
+	*threads don't start in order, it is random.
+	*/
+    if(fileSize < 3)
 	{
-		//printf("%s begin\n", cpu_name);
-		//getTime(&now_hr, &now_min, &now_sec);
-		//printf("begin time: %d:%d:%d\n", now_hr, now_min, now_sec);
-		//unlock if condition above is true
-		pthread_mutex_lock(&mutex);
+		sleep(1);
+	}
+	//**check critical_empty to see the mutex lock**
+	//Run if either ready is not empty or file queue still contains tasks.
+	while(critical_empty())
+	{
+		// unlock if condition above is true
+		//pthread_mutex_lock(&mutex);
+
+		 printf("%s begin\n", cpu_name);
+		 printf("%d flength begin %s\n", fromFile->length, cpu_name);
+		 printf("%d rlength begin %s\n", readyQueue->length, cpu_name);
+		 getTime(&now_hr, &now_min, &now_sec);
+		 printf("begin time: %d:%d:%d\n", now_hr, now_min, now_sec);
+
 		//readyQueue is empty wait for tasks to be queued
-		//if tasks from file are still available
-		
 		while(queueEmpty(readyQueue) && !queueEmpty(fromFile))
 		{
-			//printf("%s waiting for readyqueue\n", cpu_name);
+			printf("%s waiting for readyqueue\n", cpu_name);
 			//getTime(&now_hr, &now_min, &now_sec);
 			//printf("begin time: %d:%d:%d\n", now_hr, now_min, now_sec);
 			pthread_cond_wait(&full, &mutex);
 		}
 
 		//critical section for getting task
+		// if(queueEmpty(readyQueue) && queueEmpty(fromFile))
+		// {
+		// 	printf("%s terminate no task\n", cpu_name);
+		// 	pthread_mutex_unlock(&mutex);
+		// 	break;
+		// }
 
+		printf("ready queue remove %s\n", cpu_name);
 		task = dequeue(readyQueue);
-
-		if(task != NULL)
-		{
-			getTime(&now_hr, &now_min, &now_sec);
-			calcWaitTime(task, now_hr, now_min, now_sec);
-			calcTurnAround(task, now_hr, now_min, now_sec);
-			printf("\nStatistics for %s:\n", cpu_name);
-			printf("Task %d\n", task->task_id);
-			printf("Arrival time: %d:%d:%d\n", task->arrive_hr, task->arrive_min, task->arrive_sec);
-			printf("Service time: %d:%d:%d\n", now_hr, now_min, now_sec);
-
-		}
+		
+		getTime(&now_hr, &now_min, &now_sec);
+		calcWaitTime(task, now_hr, now_min, now_sec);
+		calcTurnAround(task, now_hr, now_min, now_sec);
+		printf("\nStatistics for %s:\n", cpu_name);
+		printf("Task %d\n", task->task_id);
+		printf("Arrival time: %d:%d:%d\n", task->arrive_hr, task->arrive_min, task->arrive_sec);
+		printf("Service time: %d:%d:%d\n", now_hr, now_min, now_sec);
 
 
 		pthread_cond_signal(&empty);
-		//}
-
-		pthread_mutex_unlock(&mutex);
-
+		pthread_mutex_unlock(&mutex);		
 
 		//remainder section aka consumin
 
-		//pthread_mutex_lock(&mutex);
-		if(task != NULL)
-		{
-			sleep(task->cpu_burst);
-			getTime(&now_hr, &now_min, &now_sec);
-			task_counter++;
-			num_tasks++;
-			//printf("in %d******************", readyQueue->length);//test
-			printf("\nStatistics for %s:\n", cpu_name);
-			printf("Task %d\n", task->task_id);
-			printf("Arrival time: %d:%d:%d\n", task->arrive_hr, task->arrive_min, task->arrive_sec);
-			printf("Completion time: %d:%d:%d\n", now_hr, now_min, now_sec);
-			
-			free(task);
-		}
+		sleep(task->cpu_burst);
+		getTime(&now_hr, &now_min, &now_sec);
+		task_counter++;
+		num_tasks++;
+		//printf("in %d******************", readyQueue->length);//test
+		printf("\nStatistics for %s:\n", cpu_name);
+		printf("Task %d\n", task->task_id);
+		printf("Arrival time: %d:%d:%d\n", task->arrive_hr, task->arrive_min, task->arrive_sec);
+		printf("Completion time: %d:%d:%d\n", now_hr, now_min, now_sec);
+		
+		free(task);
 
-	}	
 
+	}
+
+
+	//if(task_counter == 0)
+	//pthread_mutex_unlock(&mutex);
 
 	//printf("file %d************\n", fromFile->length);
 	//printf("ready %d************\n", readyQueue->length);
@@ -240,7 +243,6 @@ void* cpu(void *arg)
     //pthread_exit(NULL);// exit for consumer makes main hang do not use
     return NULL;
 }
-
 /*
  *function to get time on system
  *IMPORTS: takes in pointers to integer for hours, minutess and seconds
@@ -306,4 +308,20 @@ void taskTimeStats()
 	printf("\nNumber of tasks: %d\n", (int)num_tasks);
 	printf("Average waiting time: %.2f seconds\n", avg_wait);
 	printf("Average turn around time: %.2f seconds\n", avg_TAT);
+}
+
+int critical_empty()
+{
+	int isEmpty = 0;
+
+	pthread_mutex_lock(&mutex);	
+
+	isEmpty = (!queueEmpty(readyQueue) || !queueEmpty(fromFile));
+
+	if(queueEmpty(readyQueue) && queueEmpty(fromFile))
+	{
+		pthread_mutex_unlock(&mutex);	
+	}
+
+	return isEmpty;
 }
