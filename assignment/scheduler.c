@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
  */
 void* task(void *arg)
 {
-	int now_hr = 0, now_min = 0, now_sec = 0;
+	int now_hr = 0, now_min = 0, now_sec = 0, i;
 
 	process *task1, *task2 ;
 
@@ -101,7 +101,7 @@ void* task(void *arg)
 
 	    task1 = dequeue(fromFile);
 	    printf("task inputting\n");
-	    taskThread_ran = 1;
+	    taskThread_ran++;
 	   
 
 	    while(readyQueue->length == bufferSize)
@@ -130,16 +130,20 @@ void* task(void *arg)
 			printf("Arrival time: %d:%d:%d\n", task2->arrive_hr, task2->arrive_min, task2->arrive_sec);
 		}
 
-		pthread_cond_broadcast(&can_use);
+		pthread_cond_signal(&can_use);
 		pthread_cond_signal(&full);//signal that processes are available in readyqueue
 	    pthread_mutex_unlock(&mutex);//unlock mutex after done enqueueing
 
 
 	}
 
+	for(i = 0; i < 3; i++)
+	{
+		pthread_cond_signal(&full);
+	}
 	//pthread_mutex_unlock(&mutex);
 	//pthread_cond_broadcast(&full);
-	taskThread_ran = 2;
+	//taskThread_ran = 2;
 	printf("\nNumber of tasks put into Ready-Queue: %d\n", fileSize);
 	getTime(&now_hr, &now_min, &now_sec);
 	printf("Terminate at time: %d:%d:%d\n",  now_hr, now_min, now_sec);
@@ -174,7 +178,7 @@ void* cpu(void *arg)
 	// }
 	//**check critical_notEmpty to see the mutex lock**
 	//Run if either ready is not empty or file queue still contains tasks.
-	while(critical_notEmpty())
+	while(criticalNotEmpty())
 	{
 		// unlock if condition above is true
 		//pthread_mutex_lock(&mutex);
@@ -186,13 +190,7 @@ void* cpu(void *arg)
 		 printf("begin time: %d:%d:%d\n", now_hr, now_min, now_sec);
 
 		//readyQueue is empty wait for tasks to be queued
-		while(queueEmpty(readyQueue) && !queueEmpty(fromFile))
-		{
-			printf("%s waiting for readyqueue\n", cpu_name);
-			//getTime(&now_hr, &now_min, &now_sec);
-			//printf("begin time: %d:%d:%d\n", now_hr, now_min, now_sec);
-			pthread_cond_wait(&full, &mutex);
-		}
+
 
 		//critical section for getting task
 		// if(queueEmpty(readyQueue) && queueEmpty(fromFile))
@@ -313,16 +311,24 @@ void taskTimeStats()
 	printf("Average turn around time: %.2f seconds\n", avg_TAT);
 }
 
-int critical_notEmpty()
+int criticalNotEmpty()
 {
 	int isEmpty = 0;
 
 	pthread_mutex_lock(&mutex);	
 
-	while(taskThread_ran == 0)
-	{
-		pthread_cond_wait(&can_use, &mutex);
-	}
+	//while(taskThread_ran == 0)
+	//{
+		//pthread_cond_wait(&can_use, &mutex);
+	//}
+	
+		while(queueEmpty(readyQueue) && !queueEmpty(fromFile))
+		{
+			//printf("%s waiting for readyqueue\n", cpu_name);
+			//getTime(&now_hr, &now_min, &now_sec);
+			//printf("begin time: %d:%d:%d\n", now_hr, now_min, now_sec);
+			pthread_cond_wait(&full, &mutex);
+		}
 
 	isEmpty = (!queueEmpty(readyQueue) || !queueEmpty(fromFile));
 

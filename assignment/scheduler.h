@@ -24,4 +24,4 @@ void getTime(int *hr, int *min, int *sec);
 void calcWaitTime(process *inTask, int hr, int min, int sec);
 void calcTurnAround(process *inTask, int hr, int min, int sec);
 void taskTimeStats();
-int critical_notEmpty();
+int criticalNotEmpty();
