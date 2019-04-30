@@ -1,0 +1,104 @@
+#: 1 | Burst: 1
+Arrival time: 16:25:5
+
+#: 2 | Burst: 1
+Arrival time: 16:25:5
+
+
+Statistics for CPU-1:
+#: 1 | Burst: 1
+Arrival time: 16:25:5
+Service time: 16:25:5
+
+
+Statistics for CPU-2:
+#: 2 | Burst: 1
+Arrival time: 16:25:5
+Service time: 16:25:5
+
+#: 3 | Burst: 1
+Arrival time: 16:25:5
+
+#: 4 | Burst: 1
+Arrival time: 16:25:5
+
+
+Statistics for CPU-3:
+#: 3 | Burst: 1
+Arrival time: 16:25:5
+Service time: 16:25:5
+
+#: 5 | Burst: 1
+Arrival time: 16:25:5
+
+
+Statistics for CPU-1:
+#: 1 | Burst: 1
+Arrival time: 16:25:5
+Completion time: 16:25:6
+
+
+Statistics for CPU-2:
+#: 2 | Burst: 1
+Arrival time: 16:25:5
+Completion time: 16:25:6
+
+
+Statistics for CPU-2:
+#: 4 | Burst: 1
+Arrival time: 16:25:5
+Service time: 16:25:6
+
+
+Statistics for CPU-3:
+#: 3 | Burst: 1
+Arrival time: 16:25:5
+Completion time: 16:25:6
+
+
+Statistics for CPU-1:
+#: 5 | Burst: 1
+Arrival time: 16:25:5
+Service time: 16:25:6
+
+#: 6 | Burst: 1
+Arrival time: 16:25:6
+
+
+CPU-3 terminates after servicing 1 tasks
+
+Number of tasks put into Ready-Queue: 6
+Terminate at time: 16:25:6
+
+
+Statistics for CPU-2:
+#: 4 | Burst: 1
+Arrival time: 16:25:5
+Completion time: 16:25:7
+
+
+Statistics for CPU-2:
+#: 6 | Burst: 1
+Arrival time: 16:25:6
+Service time: 16:25:7
+
+
+Statistics for CPU-1:
+#: 5 | Burst: 1
+Arrival time: 16:25:5
+Completion time: 16:25:7
+
+
+CPU-1 terminates after servicing 2 tasks
+
+Statistics for CPU-2:
+#: 6 | Burst: 1
+Arrival time: 16:25:6
+Completion time: 16:25:8
+
+
+CPU-2 terminates after servicing 3 tasks
+
+Number of tasks: 6
+Average waiting time: 0.50 seconds
+Average turn around time: 1.50 seconds

@@ -55,26 +55,52 @@ int readFile(char *fileName, Queue *q)
  * IMPORTS: string fileName
  * PURPOSE: writes content
  */
-void writeToFile(char *fileName)
+int writeToFile(char *fileName, char *str)
 {
-    FILE *file = fopen(fileName, "w");
-    int i;
-
+    FILE *file = fopen(fileName, "a");
 
     if (file == NULL)
     {
         printf("\n");
         perror("Error writing to file");
+        return -1;
     }
     else
     {
-        for (i = 0; i < 10; i++)
+
+        fprintf(file, "%s", str);
+
+        if (ferror(file))
         {
-            /*hours and minutes should only have 2 digits,
-              if it is single digit then just add zero
-              at the front*/ 
-            fprintf(file, "sssssssssssss");
+            printf("Error writing to file");/*if error found, print error*/
         }
+
+        fclose(file);
+    }
+    return 0;
+}
+
+/*
+ * writeTaskStats
+ * IMPORTS: string fileName, num of task, avg wait time and avg turn around
+ * PURPOSE: writes content
+ */
+int writeTaskTimeStats(char *fileName, float num_tasks, float avg_wait, float avg_TAT)
+{
+    FILE *file = fopen(fileName, "a");
+
+    if (file == NULL)
+    {
+        printf("\n");
+        perror("Error writing to file");
+        return -1;
+    }
+    else
+    {
+
+        fprintf(file,"\nNumber of tasks: %d\n", (int)num_tasks);
+        fprintf(file, "Average waiting time: %.2f seconds\n", avg_wait);
+        fprintf(file, "Average turn around time: %.2f seconds\n", avg_TAT);
 
         if (ferror(file))
         {
@@ -88,6 +114,14 @@ void writeToFile(char *fileName)
         fclose(file);
     }
 
+    return 0;
+}
+
+int wipeLog(char *fileName)
+{
+    fclose(fopen(fileName, "w"));
+
+    return 0;
 }
 
 
