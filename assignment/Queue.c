@@ -59,7 +59,6 @@ void enqueue(Queue* q, void* data)
  *IMPORT: queue
  *EXPORTS: void pointer
  */
-
 void* dequeue(Queue* q)
 {
     Qnode* currHead;
@@ -98,6 +97,7 @@ int queueEmpty(Queue* q)
 {
     int isEmpty = 0;
 
+    //nothing at head then queue is empty
     if(q->head == NULL)
     {
         isEmpty = 1;

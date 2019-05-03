@@ -1,4 +1,6 @@
-
+/*
+ *queue header file
+ */
 #pragma once
 
 typedef struct node

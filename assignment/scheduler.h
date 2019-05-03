@@ -1,7 +1,5 @@
 /**
  *Scheduler head file
- *AUTHOR Kei Sum Wang, id: 19126089
- *
  **/
 
 #pragma once
@@ -12,6 +10,7 @@
 #include "fileIO.h"
 #include "Queue.h"
 
+//process struct containing info
 typedef struct
 {
 	int task_id;

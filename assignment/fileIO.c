@@ -1,6 +1,6 @@
 /*
  * file dealing with file io
- * by Kei Sum Wang, student id: 19126089
+ * AUTHOR: Kei Sum Wang, student id: 19126089
  */
 #include <stdio.h>
 #include <string.h>
@@ -9,33 +9,43 @@
 
 #define MAX_CHARS 100
 
-//TODO tweak this further to suit OS assignment
 
 /*
  * processFile
- * IMPORTS: string fileName, and a pointer to LinkedList.
- * PURPOSE: reads
+ * IMPORTS: string fileName, and a queue.
+ * PURPOSE: reads in task file and stores tasks in a struct, adds tasks into a queue
  */
 int readFile(char *fileName, Queue *q)
 {
     FILE *file = fopen(fileName, "r");
     char str[MAX_CHARS];
+    int check1, check2;
     process* task = NULL;
     
     if (file == NULL)
     {
         printf("\n");
-        perror("Error writing to file");
+        perror("Error reading");
         return -1;
     }
     else
     {
-        while (fgets(str, MAX_CHARS, file) != NULL)
+        while (fgets(str, MAX_CHARS, file) != NULL)//read line by line
         {
-            task = (process*)malloc(sizeof(process));
-            sscanf(str, "%3d %2d", &(task->task_id), &(task->cpu_burst));/*get task id and cpu burst*/
-             
-            enqueue(q, task);/*insert last into queue for ascending order*/        
+            sscanf(str, "%d %d", &check1, &check2);
+            if(check1 > 0 && check2 > 0)
+            {
+                task = (process*)malloc(sizeof(process));//alloc memory for task
+                sscanf(str, "%d %d", &(task->task_id), &(task->cpu_burst));/*get task id and cpu burst*/
+                 
+                enqueue(q, task);/*insert last into queue for ascending order*/    
+            }
+            else
+            {
+               printf("Error reading: id and burst time must be positive"); 
+               fclose(file);
+               return -1;
+            }    
            
         }
 
@@ -53,7 +63,7 @@ int readFile(char *fileName, Queue *q)
 /*
  * writeToFile
  * IMPORTS: string fileName
- * PURPOSE: writes content
+ * PURPOSE: appends str to file
  */
 int writeToFile(char *fileName, char *str)
 {
@@ -83,7 +93,7 @@ int writeToFile(char *fileName, char *str)
 /*
  * writeTaskStats
  * IMPORTS: string fileName, num of task, avg wait time and avg turn around
- * PURPOSE: writes content
+ * PURPOSE: appends time statistics of process simulation
  */
 int writeTaskTimeStats(char *fileName, float num_tasks, float avg_wait, float avg_TAT)
 {
@@ -117,6 +127,10 @@ int writeTaskTimeStats(char *fileName, float num_tasks, float avg_wait, float av
     return 0;
 }
 
+/*
+ *function to clear contents of file
+ *IMPORT: file name
+ */
 int wipeLog(char *fileName)
 {
     fclose(fopen(fileName, "w"));
