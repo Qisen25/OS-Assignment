@@ -1,5 +1,5 @@
 EXEC = scheduler
-UNITTEST = qTest
+UNITTEST = qUnitTest
 OBJTEST = UnitTestQueue.o Queue.o
 OBJ = scheduler.o fileIO.o Queue.o
 CFLAGS = -Wall -g -lpthread

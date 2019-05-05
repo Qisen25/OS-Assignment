@@ -20,8 +20,6 @@ typedef struct
 	int comp_hr, comp_min, comp_sec;
 }process;
 
-
-
 void* task(void* arg);
 void* cpu(void *arg);
 void getTime(int *hr, int *min, int *sec);
@@ -30,4 +28,4 @@ void calcTurnAround(process *inTask);
 void taskThreadStats(process *task);
 void cpuThreadStats(process *task, char *cpu_name, int status);
 void taskTimeStats();
-int criticalNotEmpty();
+int criticalNotEmpty(char *nameCpu);

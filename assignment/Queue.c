@@ -160,7 +160,7 @@ void freeQueue(Queue* q, int freeOrNot)
     while (node != NULL)
     {
         nextNode = node->next;/*get next node*/
-        if (freeOrNot == 1)/*if dataFree is 1
+        if (freeOrNot == 1)/*if freeOrNot is 1
                                     then free the data. 
                                     Otherwise don't free data*/
         {

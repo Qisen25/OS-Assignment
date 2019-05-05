@@ -33,7 +33,7 @@ int readFile(char *fileName, Queue *q)
         while (fgets(str, MAX_CHARS, file) != NULL)//read line by line
         {
             sscanf(str, "%d %d", &check1, &check2);
-            if(check1 > 0 && check2 > 0)
+            if(check1 > 0 && check2 > 0)//id and burst are (+)ve
             {
                 task = (process*)malloc(sizeof(process));//alloc memory for task
                 sscanf(str, "%d %d", &(task->task_id), &(task->cpu_burst));/*get task id and cpu burst*/
@@ -108,7 +108,7 @@ int writeTaskTimeStats(char *fileName, float num_tasks, float avg_wait, float av
     else
     {
 
-        fprintf(file,"\nNumber of tasks: %d\n", (int)num_tasks);
+        fprintf(file,"Number of tasks: %d\n", (int)num_tasks);
         fprintf(file, "Average waiting time: %.2f seconds\n", avg_wait);
         fprintf(file, "Average turn around time: %.2f seconds\n", avg_TAT);
 

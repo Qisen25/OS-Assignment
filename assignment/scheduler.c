@@ -9,16 +9,17 @@
 #include <unistd.h>
 #include "scheduler.h"
 
+/***GLOBAL VARIABLES***/
 float num_tasks = 0.0, total_waiting_time = 0.0, total_turnaround_time = 0.0; 
 
-int bufferLimit, fileSize;
+int bufferLimit = 0, fileSize = 0;
 
 pthread_cond_t full, empty;//conditions for wait and signaling
 pthread_mutex_t mutex;//to help setup mutual exclusion when entering crit section
 
 //shared buffers
 Queue* readyQueue;//buffer to be accessed by threads
-Queue* fromFile;//file content are stored in queue
+Queue* fromFileQueue;//task_file content are stored in queue
 
 pthread_t task_thread, cpu1, cpu2, cpu3;
 
@@ -39,19 +40,19 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    //initilization of containers
-    fromFile = createQueue();
+    //initilize containers
+    fromFileQueue = createQueue();
     readyQueue = createQueue();
 
-    if(readFile(argv[1], fromFile) != 0)
+    if(readFile(argv[1], fromFileQueue) != 0)
     {
-    	freeQueue(fromFile, 0);
+    	freeQueue(fromFileQueue, 0);
     	freeQueue(readyQueue, 0);
     	return -1;//unsuccessful read should end
     }
 
-    //total number of tasks globally known
-    fileSize = fromFile->length;
+    //total number of tasks from task_file global var
+    fileSize = fromFileQueue->length;
 
     //wipe previous log to prevent appending
     wipeLog(simLog);
@@ -79,11 +80,8 @@ int main(int argc, char *argv[])
     pthread_cond_destroy(&full);
     pthread_cond_destroy(&empty);
 
-    printf("%d flength begin\n", fromFile->length);
-    printf("%d rlength begin\n", readyQueue->length);
-
     //free containers from memory
-    freeQueue(fromFile, 0);
+    freeQueue(fromFileQueue, 0);
     freeQueue(readyQueue, 0);
 
     //output end stats the num_task, waiting and turn around stats to screen and file
@@ -103,21 +101,22 @@ void* task(void *arg)
 
     process *task1, *task2 ;
 
-    while(!queueEmpty(fromFile))
+    while(!queueEmpty(fromFileQueue))
     {
 		
         pthread_mutex_lock(&mutex);//lock thread to prevent to incorrect processing
         //task thread is the only thread able access ready queue until unlock
 
-        task1 = dequeue(fromFile);
-        printf("task inputting\n\n");
+        task1 = dequeue(fromFileQueue);
 
         //wait for cpu to consume if buffer limit reached
         while(readyQueue->length == bufferLimit)
         {
-            //printf("waiting for cpu to consume %d length \n", readyQueue->length);
+            printf("task waiting for cpus to consume %d length \n\n", readyQueue->length);
             pthread_cond_wait(&empty, &mutex);
         }
+
+        printf("*******Task thread inputting*******\n\n");
 
         //critical section for queueing, task can only access ready when lock cpus cannot
         getTime(&(task1->arrive_hr), &(task1->arrive_min), &(task1->arrive_sec));//get current time
@@ -130,12 +129,12 @@ void* task(void *arg)
         spaceLeft = bufferLimit - readyQueue->length;
         /*buffer size must be greater 1 in order to get 2 tasks
          *file queue cannot be empty after task1 dequeue
-         *space left must be greater than 0 or otherwise ready queue 1 task above buffer limit 
+         *space left must be greater than 0 otherwise ready queue 1 task above buffer limit 
          */
-        if(bufferLimit > 1 && !queueEmpty(fromFile) && spaceLeft > 0)
+        if(bufferLimit > 1 && !queueEmpty(fromFileQueue) && spaceLeft > 0)
         {
-            printf("********adding second task*************\n");
-            task2 = dequeue(fromFile);
+            printf("*******adding second task*******\n");
+            task2 = dequeue(fromFileQueue);
             getTime(&(task2->arrive_hr), &(task2->arrive_min), &(task2->arrive_sec));//get current time
             enqueue(readyQueue, task2);
 
@@ -143,11 +142,10 @@ void* task(void *arg)
             taskThreadStats(task2);
         }
 
+        printf("current ready queue size after task thread put tasks: %d\n\n", readyQueue->length);
 
         pthread_cond_signal(&full);//signal that processes are available in readyqueue
         pthread_mutex_unlock(&mutex);//unlock mutex after done enqueueing
-
-        printf("%d curr ready queue size \n", readyQueue->length);
 
     }
 
@@ -164,7 +162,7 @@ void* task(void *arg)
     }
 
     //concat string ready to write task thread summary to file and print to screen
-    concat = sprintf(summary, "\nNumber of tasks put into Ready-Queue: %d\n", fileSize);
+    concat = sprintf(summary, "Number of tasks put into Ready-Queue: %d\n", fileSize);
     getTime(&now_hr, &now_min, &now_sec);
     concat += sprintf(summary + concat, "Terminate at time: %d:%d:%d\n\n",  now_hr, now_min, now_sec);
     printf("%s", summary);
@@ -179,7 +177,6 @@ void* task(void *arg)
  */
 void* cpu(void *arg)
 {
-    int now_hr = 0, now_min = 0, now_sec = 0;
     int task_counter;
     char summary[50];
     char *cpu_name = (char*)arg;//get cpu thread name
@@ -188,24 +185,20 @@ void* cpu(void *arg)
     task_counter = 0;
 
     //**check criticalnotEmpty() to see the mutex lock**
-    //Run if either ready is not empty or file queue still contains tasks.
-    while(criticalNotEmpty())
+    while(criticalNotEmpty(cpu_name))
     {
         /*if criticalNotEmpty() is true allow 1 cpu that is waiting to 
          *enter crit section of accessing ready queue
          */
-        printf("%s begin\n", cpu_name);
-        printf("%d flength begin %s\n", fromFile->length, cpu_name);
-        printf("%d rlength begin %s\n", readyQueue->length, cpu_name);
-        getTime(&now_hr, &now_min, &now_sec);
-        printf("begin time: %d:%d:%d\n", now_hr, now_min, now_sec);
+        printf("*******%s removing task from ready queue*******\n", cpu_name);
+        printf("current %d file queue length\n", fromFileQueue->length);
+        printf("current %d ready queue length\n", readyQueue->length);
 
-
-        printf("\n********ready queue remove %s********\n", cpu_name);
+        //critical section
         //at least 1 item should be available to dequeue other this loop should've not execute
         task = dequeue(readyQueue);
 
-        printf("*******%d %s curr ready queue size after deq*********\n", readyQueue->length, cpu_name);
+        printf("*******ready queue size is %d after %s dequeues*******\n", readyQueue->length, cpu_name);
         //calculate the wait and turn around time
         getTime(&(task->serv_hr), &(task->serv_min), &(task->serv_sec));
         calcWaitTime(task);
@@ -218,8 +211,8 @@ void* cpu(void *arg)
         pthread_mutex_unlock(&mutex);//release lock now, cpu will now consume
                                      //no longer need lock since task out of ready queue		
 
-        //remainder section aka consumin
-        printf("********CONSUMING %s********\n", cpu_name);
+        //remainder section aka consuming
+        printf("*******%s is consuming*******\n\n", cpu_name);
         sleep(task->cpu_burst);
         getTime(&(task->comp_hr), &(task->comp_min), &(task->comp_sec));
         task_counter++;//count task for current thread
@@ -228,23 +221,26 @@ void* cpu(void *arg)
         //output cpu completion task stats
         cpuThreadStats(task, cpu_name, DONE);
 
-
         free(task);
     }
 
-    printf("***CPU Termination*****\n");
-    sprintf(summary,"\n%s terminates after servicing %d tasks\n", cpu_name, task_counter);
+    printf("*******CPU Termination********\n");
+    sprintf(summary,"%s terminates after servicing %d tasks\n\n", cpu_name, task_counter);
     printf("%s", summary);
     writeToFile(simLog, summary);
+
+    pthread_mutex_unlock(&mutex);//unlock lock set by criticalNotEmpty(), no tasks at this point.
+
     return NULL;
 }
 
 /*
  *criticalNotEmpty function checks if cpu can enter the critical section
  *only if ready queue is not empty and file queue still has task
+ *IMPORT: cpu's name
  *EXPORT: integer flag indicating ready and file queue is empty(0) or not(1)
  */
-int criticalNotEmpty()
+int criticalNotEmpty(char *nameCpu)
 {
     int notEmpty = 0;
 
@@ -256,8 +252,9 @@ int criticalNotEmpty()
      */
 
     //ready queue is empty but file queue still has tasks wait for task thread
-    while(queueEmpty(readyQueue) && !queueEmpty(fromFile))
+    while(queueEmpty(readyQueue) && !queueEmpty(fromFileQueue))
     {
+        printf("*******%s waiting for ready queue to have tasks********\n", nameCpu);
         pthread_cond_wait(&full, &mutex);
     }
 
@@ -265,13 +262,6 @@ int criticalNotEmpty()
     //we don't need to check if file queue is empty due to wait above
     //task thread would queue more tasks if ready queue is empty but there are still more tasks
     notEmpty = (!queueEmpty(readyQueue));
-
-    //if ready queue and no more tasks to get, lock is no longer needed
-    //nothing to consume thus not enter crit section
-    if(queueEmpty(readyQueue) && queueEmpty(fromFile))
-    {
-        pthread_mutex_unlock(&mutex);	
-    }
 
     return notEmpty;
 }
@@ -311,7 +301,6 @@ void taskThreadStats(process *task)
 
     //write to file using func from fileIO.c
     writeToFile(simLog, str);
-
 }
 
 /*
@@ -343,7 +332,6 @@ void cpuThreadStats(process *task, char *cpu_name, int status)
 
     //write to log using func from fileIO.c
     writeToFile(simLog, str);
-
 }
 
 /*
@@ -387,7 +375,7 @@ void taskTimeStats()
     avg_wait = total_waiting_time / num_tasks;
     avg_TAT = total_turnaround_time / num_tasks;
 
-    printf("\nNumber of tasks: %d\n", (int)num_tasks);
+    printf("Number of tasks: %d\n", (int)num_tasks);
     printf("Average waiting time: %.2f seconds\n", avg_wait);
     printf("Average turn around time: %.2f seconds\n", avg_TAT);
 
