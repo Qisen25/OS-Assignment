@@ -1,0 +1,15 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0 Menlo;}}{\colortbl;\red96\green160\blue176;\red64\green112\blue160;\red64\green160\blue112;\red255\green240\blue240;\red0\green160\blue0;\red0\green112\blue32;\red187\green187\blue187;\red0\green68\blue221;\red0\green32\blue112;\red85\green85\blue85;\red198\green93\blue9;\red14\green132\blue181;\red255\green0\blue0;\red0\green0\blue128;\red128\green0\blue128;\red144\green32\blue0;\red160\green0\blue0;\red96\green173\blue213;\red35\green83\blue136;\red102\green102\blue102;\red81\green121\blue24;\red6\green40\blue115;\red187\green96\blue213;\red136\green136\blue136;\red213\green85\blue55;\red112\green160\blue208;\red6\green40\blue126;}\f0{\cf1\i #!/bin/bash\par
+}\par
+{\cf23 size}{\cf20 =}{\cf23 $1}\par
+{\cf23 count}{\cf20 =}1\par
+\par
+{\cf6\b if} {\cf20 [} {\cf2 "$size"} -gt 0 {\cf20 ]}; {\cf6\b then\par
+    }{\cf6\b while} {\cf20 [} {\cf23 $count} -le {\cf23 $size} {\cf20 ]}; {\cf6\b do\par
+        }{\cf6 echo} {\cf23 $count} {\cf6\b $((}{\cf20 (}RANDOM {\cf20 %} {\cf3 50}{\cf20 )} {\cf20 +} {\cf3 1}{\cf6\b ))}\par
+        {\cf23 count}{\cf20 =}{\cf6\b $((}{\cf23 $count} {\cf20 +} {\cf3 1}{\cf6\b ))}\par
+    {\cf6\b done} > task_file\par
+    {\cf6 echo} {\cf2 "Done task_file"}\par
+{\cf6\b else\par
+    }{\cf6 echo} {\cf2 "Command arg must be greater than 0"}\par
+{\cf6\b fi}\par
+}

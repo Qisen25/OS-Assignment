@@ -1,5 +1,5 @@
 /*
- *queue header file
+ *Queue header file
  */
 #pragma once
 

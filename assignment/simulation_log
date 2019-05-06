@@ -1,441 +1,441 @@
 #: 1 | Burst: 1
-Arrival time: 23:29:35
+Arrival time: 15:23:58
 
 #: 2 | Burst: 1
-Arrival time: 23:29:35
+Arrival time: 15:23:59
 
 #: 3 | Burst: 1
-Arrival time: 23:29:35
+Arrival time: 15:23:59
 
 #: 4 | Burst: 1
-Arrival time: 23:29:35
+Arrival time: 15:23:59
 
 #: 5 | Burst: 1
-Arrival time: 23:29:35
+Arrival time: 15:23:59
 
 #: 6 | Burst: 1
-Arrival time: 23:29:35
+Arrival time: 15:23:59
 
 #: 7 | Burst: 1
-Arrival time: 23:29:35
-
-Statistics for CPU-3:
-#: 1 | Burst: 1
-Arrival time: 23:29:35
-Service time: 23:29:35
+Arrival time: 15:23:59
 
 #: 8 | Burst: 1
-Arrival time: 23:29:36
-
-Statistics for CPU-2:
-#: 2 | Burst: 1
-Arrival time: 23:29:35
-Service time: 23:29:36
+Arrival time: 15:23:59
 
 #: 9 | Burst: 1
-Arrival time: 23:29:36
-
-Statistics for CPU-1:
-#: 3 | Burst: 1
-Arrival time: 23:29:35
-Service time: 23:29:36
+Arrival time: 15:23:59
 
 #: 10 | Burst: 1
-Arrival time: 23:29:36
+Arrival time: 15:23:59
 
-Statistics for CPU-3:
+Statistics for CPU-1:
 #: 1 | Burst: 1
-Arrival time: 23:29:35
-Completion time: 23:29:37
+Arrival time: 15:23:58
+Service time: 15:23:59
+
+#: 11 | Burst: 1
+Arrival time: 15:23:59
 
 Statistics for CPU-2:
 #: 2 | Burst: 1
-Arrival time: 23:29:35
-Completion time: 23:29:37
-
-Statistics for CPU-1:
-#: 3 | Burst: 1
-Arrival time: 23:29:35
-Completion time: 23:29:37
-
-Statistics for CPU-3:
-#: 4 | Burst: 1
-Arrival time: 23:29:35
-Service time: 23:29:37
-
-Statistics for CPU-1:
-#: 5 | Burst: 1
-Arrival time: 23:29:35
-Service time: 23:29:37
-
-Statistics for CPU-2:
-#: 6 | Burst: 1
-Arrival time: 23:29:35
-Service time: 23:29:37
-
-#: 11 | Burst: 1
-Arrival time: 23:29:37
+Arrival time: 15:23:59
+Service time: 15:23:59
 
 #: 12 | Burst: 1
-Arrival time: 23:29:37
-
-#: 13 | Burst: 1
-Arrival time: 23:29:37
-
-Statistics for CPU-1:
-#: 5 | Burst: 1
-Arrival time: 23:29:35
-Completion time: 23:29:38
+Arrival time: 15:23:59
 
 Statistics for CPU-3:
-#: 4 | Burst: 1
-Arrival time: 23:29:35
-Completion time: 23:29:38
+#: 3 | Burst: 1
+Arrival time: 15:23:59
+Service time: 15:23:59
+
+#: 13 | Burst: 1
+Arrival time: 15:23:59
 
 Statistics for CPU-1:
-#: 7 | Burst: 1
-Arrival time: 23:29:35
-Service time: 23:29:38
+#: 1 | Burst: 1
+Arrival time: 15:23:58
+Completion time: 15:24:0
+
+Statistics for CPU-1:
+#: 4 | Burst: 1
+Arrival time: 15:23:59
+Service time: 15:24:0
+
+#: 14 | Burst: 1
+Arrival time: 15:24:0
+
+Statistics for CPU-3:
+#: 3 | Burst: 1
+Arrival time: 15:23:59
+Completion time: 15:24:0
+
+Statistics for CPU-3:
+#: 5 | Burst: 1
+Arrival time: 15:23:59
+Service time: 15:24:0
+
+Statistics for CPU-2:
+#: 2 | Burst: 1
+Arrival time: 15:23:59
+Completion time: 15:24:0
+
+#: 15 | Burst: 1
+Arrival time: 15:24:0
 
 Statistics for CPU-2:
 #: 6 | Burst: 1
-Arrival time: 23:29:35
-Completion time: 23:29:38
-
-Statistics for CPU-2:
-#: 8 | Burst: 1
-Arrival time: 23:29:36
-Service time: 23:29:38
-
-#: 14 | Burst: 1
-Arrival time: 23:29:38
-
-#: 15 | Burst: 1
-Arrival time: 23:29:38
-
-Statistics for CPU-3:
-#: 9 | Burst: 1
-Arrival time: 23:29:36
-Service time: 23:29:38
+Arrival time: 15:23:59
+Service time: 15:24:0
 
 #: 16 | Burst: 1
-Arrival time: 23:29:38
+Arrival time: 15:24:0
 
 Statistics for CPU-2:
-#: 8 | Burst: 1
-Arrival time: 23:29:36
-Completion time: 23:29:39
+#: 6 | Burst: 1
+Arrival time: 15:23:59
+Completion time: 15:24:1
 
-Statistics for CPU-1:
+Statistics for CPU-3:
+#: 5 | Burst: 1
+Arrival time: 15:23:59
+Completion time: 15:24:1
+
+Statistics for CPU-2:
 #: 7 | Burst: 1
-Arrival time: 23:29:35
-Completion time: 23:29:39
+Arrival time: 15:23:59
+Service time: 15:24:1
 
 Statistics for CPU-1:
-#: 10 | Burst: 1
-Arrival time: 23:29:36
-Service time: 23:29:39
+#: 4 | Burst: 1
+Arrival time: 15:23:59
+Completion time: 15:24:1
 
 Statistics for CPU-3:
-#: 9 | Burst: 1
-Arrival time: 23:29:36
-Completion time: 23:29:39
-
-Statistics for CPU-2:
-#: 11 | Burst: 1
-Arrival time: 23:29:37
-Service time: 23:29:39
-
-Statistics for CPU-3:
-#: 12 | Burst: 1
-Arrival time: 23:29:37
-Service time: 23:29:39
+#: 8 | Burst: 1
+Arrival time: 15:23:59
+Service time: 15:24:1
 
 #: 17 | Burst: 1
-Arrival time: 23:29:39
+Arrival time: 15:24:1
 
 #: 18 | Burst: 1
-Arrival time: 23:29:39
+Arrival time: 15:24:1
+
+Statistics for CPU-1:
+#: 9 | Burst: 1
+Arrival time: 15:23:59
+Service time: 15:24:1
 
 #: 19 | Burst: 1
-Arrival time: 23:29:39
+Arrival time: 15:24:1
 
-Statistics for CPU-1:
+Statistics for CPU-2:
+#: 7 | Burst: 1
+Arrival time: 15:23:59
+Completion time: 15:24:2
+
+Statistics for CPU-2:
 #: 10 | Burst: 1
-Arrival time: 23:29:36
-Completion time: 23:29:40
+Arrival time: 15:23:59
+Service time: 15:24:2
 
-Statistics for CPU-2:
+Statistics for CPU-3:
+#: 8 | Burst: 1
+Arrival time: 15:23:59
+Completion time: 15:24:2
+
+Statistics for CPU-3:
 #: 11 | Burst: 1
-Arrival time: 23:29:37
-Completion time: 23:29:40
-
-Statistics for CPU-1:
-#: 13 | Burst: 1
-Arrival time: 23:29:37
-Service time: 23:29:40
-
-Statistics for CPU-2:
-#: 14 | Burst: 1
-Arrival time: 23:29:38
-Service time: 23:29:40
+Arrival time: 15:23:59
+Service time: 15:24:2
 
 #: 20 | Burst: 1
-Arrival time: 23:29:40
+Arrival time: 15:24:2
 
 #: 21 | Burst: 1
-Arrival time: 23:29:40
+Arrival time: 15:24:2
 
-Statistics for CPU-3:
+Statistics for CPU-1:
+#: 9 | Burst: 1
+Arrival time: 15:23:59
+Completion time: 15:24:2
+
+Statistics for CPU-1:
 #: 12 | Burst: 1
-Arrival time: 23:29:37
-Completion time: 23:29:40
-
-Statistics for CPU-3:
-#: 15 | Burst: 1
-Arrival time: 23:29:38
-Service time: 23:29:40
+Arrival time: 15:23:59
+Service time: 15:24:2
 
 #: 22 | Burst: 1
-Arrival time: 23:29:40
+Arrival time: 15:24:2
 
-Statistics for CPU-1:
+Statistics for CPU-2:
+#: 10 | Burst: 1
+Arrival time: 15:23:59
+Completion time: 15:24:3
+
+Statistics for CPU-2:
 #: 13 | Burst: 1
-Arrival time: 23:29:37
-Completion time: 23:29:41
-
-Statistics for CPU-2:
-#: 14 | Burst: 1
-Arrival time: 23:29:38
-Completion time: 23:29:41
-
-Statistics for CPU-2:
-#: 16 | Burst: 1
-Arrival time: 23:29:38
-Service time: 23:29:41
-
-Statistics for CPU-1:
-#: 17 | Burst: 1
-Arrival time: 23:29:39
-Service time: 23:29:41
-
-Statistics for CPU-3:
-#: 15 | Burst: 1
-Arrival time: 23:29:38
-Completion time: 23:29:41
-
-Statistics for CPU-3:
-#: 18 | Burst: 1
-Arrival time: 23:29:39
-Service time: 23:29:41
+Arrival time: 15:23:59
+Service time: 15:24:3
 
 #: 23 | Burst: 1
-Arrival time: 23:29:41
+Arrival time: 15:24:3
+
+Statistics for CPU-3:
+#: 11 | Burst: 1
+Arrival time: 15:23:59
+Completion time: 15:24:3
+
+Statistics for CPU-3:
+#: 14 | Burst: 1
+Arrival time: 15:24:0
+Service time: 15:24:3
 
 #: 24 | Burst: 1
-Arrival time: 23:29:41
+Arrival time: 15:24:3
+
+Statistics for CPU-1:
+#: 12 | Burst: 1
+Arrival time: 15:23:59
+Completion time: 15:24:3
+
+Statistics for CPU-1:
+#: 15 | Burst: 1
+Arrival time: 15:24:0
+Service time: 15:24:3
 
 #: 25 | Burst: 1
-Arrival time: 23:29:41
+Arrival time: 15:24:3
+
+Statistics for CPU-2:
+#: 13 | Burst: 1
+Arrival time: 15:23:59
+Completion time: 15:24:4
 
 Statistics for CPU-2:
 #: 16 | Burst: 1
-Arrival time: 23:29:38
-Completion time: 23:29:42
-
-Statistics for CPU-2:
-#: 19 | Burst: 1
-Arrival time: 23:29:39
-Service time: 23:29:42
+Arrival time: 15:24:0
+Service time: 15:24:4
 
 Statistics for CPU-3:
-#: 18 | Burst: 1
-Arrival time: 23:29:39
-Completion time: 23:29:42
+#: 14 | Burst: 1
+Arrival time: 15:24:0
+Completion time: 15:24:4
+
+#: 26 | Burst: 1
+Arrival time: 15:24:4
+
+Statistics for CPU-1:
+#: 15 | Burst: 1
+Arrival time: 15:24:0
+Completion time: 15:24:4
 
 Statistics for CPU-1:
 #: 17 | Burst: 1
-Arrival time: 23:29:39
-Completion time: 23:29:42
+Arrival time: 15:24:1
+Service time: 15:24:4
 
 Statistics for CPU-3:
-#: 20 | Burst: 1
-Arrival time: 23:29:40
-Service time: 23:29:42
-
-Statistics for CPU-1:
-#: 21 | Burst: 1
-Arrival time: 23:29:40
-Service time: 23:29:42
-
-#: 26 | Burst: 1
-Arrival time: 23:29:42
+#: 18 | Burst: 1
+Arrival time: 15:24:1
+Service time: 15:24:4
 
 #: 27 | Burst: 1
-Arrival time: 23:29:42
+Arrival time: 15:24:4
 
 #: 28 | Burst: 1
-Arrival time: 23:29:42
+Arrival time: 15:24:4
+
+Statistics for CPU-3:
+#: 18 | Burst: 1
+Arrival time: 15:24:1
+Completion time: 15:24:5
 
 Statistics for CPU-2:
+#: 16 | Burst: 1
+Arrival time: 15:24:0
+Completion time: 15:24:5
+
+Statistics for CPU-3:
 #: 19 | Burst: 1
-Arrival time: 23:29:39
-Completion time: 23:29:43
-
-Statistics for CPU-2:
-#: 22 | Burst: 1
-Arrival time: 23:29:40
-Service time: 23:29:43
-
-Statistics for CPU-1:
-#: 21 | Burst: 1
-Arrival time: 23:29:40
-Completion time: 23:29:43
+Arrival time: 15:24:1
+Service time: 15:24:5
 
 #: 29 | Burst: 1
-Arrival time: 23:29:43
+Arrival time: 15:24:5
 
 Statistics for CPU-1:
-#: 23 | Burst: 1
-Arrival time: 23:29:41
-Service time: 23:29:43
+#: 17 | Burst: 1
+Arrival time: 15:24:1
+Completion time: 15:24:5
+
+Statistics for CPU-1:
+#: 20 | Burst: 1
+Arrival time: 15:24:2
+Service time: 15:24:5
 
 #: 30 | Burst: 1
-Arrival time: 23:29:43
+Arrival time: 15:24:5
 
-Statistics for CPU-3:
-#: 20 | Burst: 1
-Arrival time: 23:29:40
-Completion time: 23:29:43
-
-Statistics for CPU-3:
-#: 24 | Burst: 1
-Arrival time: 23:29:41
-Service time: 23:29:43
+Statistics for CPU-2:
+#: 21 | Burst: 1
+Arrival time: 15:24:2
+Service time: 15:24:5
 
 #: 31 | Burst: 1
-Arrival time: 23:29:43
+Arrival time: 15:24:5
+
+Statistics for CPU-1:
+#: 20 | Burst: 1
+Arrival time: 15:24:2
+Completion time: 15:24:6
 
 Statistics for CPU-2:
+#: 21 | Burst: 1
+Arrival time: 15:24:2
+Completion time: 15:24:6
+
+Statistics for CPU-1:
 #: 22 | Burst: 1
-Arrival time: 23:29:40
-Completion time: 23:29:44
-
-Statistics for CPU-2:
-#: 25 | Burst: 1
-Arrival time: 23:29:41
-Service time: 23:29:44
-
-#: 32 | Burst: 1
-Arrival time: 23:29:44
-
-Statistics for CPU-1:
-#: 23 | Burst: 1
-Arrival time: 23:29:41
-Completion time: 23:29:44
-
-Statistics for CPU-1:
-#: 26 | Burst: 1
-Arrival time: 23:29:42
-Service time: 23:29:44
+Arrival time: 15:24:2
+Service time: 15:24:6
 
 Statistics for CPU-3:
+#: 19 | Burst: 1
+Arrival time: 15:24:1
+Completion time: 15:24:6
+
+#: 32 | Burst: 1
+Arrival time: 15:24:6
+
+Statistics for CPU-3:
+#: 23 | Burst: 1
+Arrival time: 15:24:3
+Service time: 15:24:6
+
+Statistics for CPU-2:
 #: 24 | Burst: 1
-Arrival time: 23:29:41
-Completion time: 23:29:44
+Arrival time: 15:24:3
+Service time: 15:24:6
 
 #: 33 | Burst: 1
-Arrival time: 23:29:44
+Arrival time: 15:24:6
 
 Number of tasks put into Ready-Queue: 33
-Terminate at time: 23:29:44
+Terminate at time: 15:24:6
 
-Statistics for CPU-3:
-#: 27 | Burst: 1
-Arrival time: 23:29:42
-Service time: 23:29:44
+Statistics for CPU-2:
+#: 24 | Burst: 1
+Arrival time: 15:24:3
+Completion time: 15:24:7
 
 Statistics for CPU-2:
 #: 25 | Burst: 1
-Arrival time: 23:29:41
-Completion time: 23:29:45
+Arrival time: 15:24:3
+Service time: 15:24:7
 
-Statistics for CPU-2:
-#: 28 | Burst: 1
-Arrival time: 23:29:42
-Service time: 23:29:45
+Statistics for CPU-1:
+#: 22 | Burst: 1
+Arrival time: 15:24:2
+Completion time: 15:24:7
 
 Statistics for CPU-1:
 #: 26 | Burst: 1
-Arrival time: 23:29:42
-Completion time: 23:29:45
+Arrival time: 15:24:4
+Service time: 15:24:7
 
-Statistics for CPU-1:
-#: 29 | Burst: 1
-Arrival time: 23:29:43
-Service time: 23:29:45
+Statistics for CPU-3:
+#: 23 | Burst: 1
+Arrival time: 15:24:3
+Completion time: 15:24:7
 
 Statistics for CPU-3:
 #: 27 | Burst: 1
-Arrival time: 23:29:42
-Completion time: 23:29:45
+Arrival time: 15:24:4
+Service time: 15:24:7
 
-Statistics for CPU-3:
-#: 30 | Burst: 1
-Arrival time: 23:29:43
-Service time: 23:29:45
+Statistics for CPU-2:
+#: 25 | Burst: 1
+Arrival time: 15:24:3
+Completion time: 15:24:8
 
 Statistics for CPU-2:
 #: 28 | Burst: 1
-Arrival time: 23:29:42
-Completion time: 23:29:46
+Arrival time: 15:24:4
+Service time: 15:24:8
 
-Statistics for CPU-2:
-#: 31 | Burst: 1
-Arrival time: 23:29:43
-Service time: 23:29:46
+Statistics for CPU-1:
+#: 26 | Burst: 1
+Arrival time: 15:24:4
+Completion time: 15:24:8
 
 Statistics for CPU-1:
 #: 29 | Burst: 1
-Arrival time: 23:29:43
-Completion time: 23:29:46
+Arrival time: 15:24:5
+Service time: 15:24:8
 
-Statistics for CPU-1:
-#: 32 | Burst: 1
-Arrival time: 23:29:44
-Service time: 23:29:46
+Statistics for CPU-3:
+#: 27 | Burst: 1
+Arrival time: 15:24:4
+Completion time: 15:24:8
 
 Statistics for CPU-3:
 #: 30 | Burst: 1
-Arrival time: 23:29:43
-Completion time: 23:29:46
+Arrival time: 15:24:5
+Service time: 15:24:8
 
 Statistics for CPU-3:
-#: 33 | Burst: 1
-Arrival time: 23:29:44
-Service time: 23:29:46
+#: 30 | Burst: 1
+Arrival time: 15:24:5
+Completion time: 15:24:9
 
-Statistics for CPU-2:
+Statistics for CPU-3:
 #: 31 | Burst: 1
-Arrival time: 23:29:43
-Completion time: 23:29:47
+Arrival time: 15:24:5
+Service time: 15:24:9
+
+Statistics for CPU-1:
+#: 29 | Burst: 1
+Arrival time: 15:24:5
+Completion time: 15:24:9
 
 Statistics for CPU-1:
 #: 32 | Burst: 1
-Arrival time: 23:29:44
-Completion time: 23:29:47
+Arrival time: 15:24:6
+Service time: 15:24:9
 
-CPU-2 terminates after servicing 11 tasks
+Statistics for CPU-2:
+#: 28 | Burst: 1
+Arrival time: 15:24:4
+Completion time: 15:24:9
+
+Statistics for CPU-2:
+#: 33 | Burst: 1
+Arrival time: 15:24:6
+Service time: 15:24:9
+
+Statistics for CPU-1:
+#: 32 | Burst: 1
+Arrival time: 15:24:6
+Completion time: 15:24:10
 
 CPU-1 terminates after servicing 11 tasks
 
 Statistics for CPU-3:
-#: 33 | Burst: 1
-Arrival time: 23:29:44
-Completion time: 23:29:47
+#: 31 | Burst: 1
+Arrival time: 15:24:5
+Completion time: 15:24:10
 
 CPU-3 terminates after servicing 11 tasks
 
+Statistics for CPU-2:
+#: 33 | Burst: 1
+Arrival time: 15:24:6
+Completion time: 15:24:10
+
+CPU-2 terminates after servicing 11 tasks
+
 Number of tasks: 33
-Average waiting time: 2.15 seconds
-Average turn around time: 3.15 seconds
+Average waiting time: 2.70 seconds
+Average turn around time: 3.70 seconds

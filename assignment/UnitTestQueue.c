@@ -2,6 +2,7 @@
  * Unit test for linked q
  *
  * by Kei Sum Wang, student id: 19126089
+ * REFERENCE: this is from the unit Unix and C programming
  */
 
 #include <stdio.h>
@@ -46,7 +47,7 @@ void testLastOps(Queue *q)
     enqueue(q, &e);
     enqueue(q, &f);
 
-    printf("===check first and last values and length with qs peekFirst(), peekMid(), peekLast() and length field===\n");
+    printf("===check first and last values and length with qs peekFirst(), peekLast() and length field===\n");
     top = peekFirst(q);
     end = peekLast(q);
 
